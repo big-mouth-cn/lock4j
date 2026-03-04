@@ -89,7 +89,7 @@ public class LockOpsInterceptor extends AbstractConditionalLockChainInterceptor 
     }
 
     private void doUnlock(@Nullable LockInfo lockInfo, Lock4j annotation) {
-        if (Objects.isNull(lockInfo) || annotation.autoRelease()) {
+        if (Objects.isNull(lockInfo) || !annotation.autoRelease()) {
             return;
         }
         final boolean releaseLock = lockTemplate.releaseLock(lockInfo);
