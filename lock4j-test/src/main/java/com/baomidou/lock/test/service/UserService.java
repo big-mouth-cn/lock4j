@@ -50,6 +50,8 @@ public interface UserService {
 
     void nonAutoReleaseLock();
 
+    void autoReleaseLock();
+
     void renewExpirationTemplate();
 
     @RedisLock(keys ="1")

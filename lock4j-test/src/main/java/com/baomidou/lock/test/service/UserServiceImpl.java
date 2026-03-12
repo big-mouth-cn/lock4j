@@ -193,6 +193,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Lock4j(acquireTimeout = 0, expire = 5000, autoRelease = true)
+    public void autoReleaseLock() {
+        System.out.println("执行autoReleaseLock方法 , 当前线程:" + Thread.currentThread().getName() + " , counter：" + (counter++));
+    }
+
+    @Override
     @Lock4j(keys ="1",expire = -1,executor = RedisTemplateLockExecutor.class)
     public void renewExpirationTemplate() {
         System.out.println("执行renewExpirationTemplate方法 , 当前线程:" + Thread.currentThread().getName() + " , counter：" + (counter++));

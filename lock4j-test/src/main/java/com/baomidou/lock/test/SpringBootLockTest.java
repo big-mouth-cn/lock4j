@@ -218,6 +218,28 @@ public class SpringBootLockTest {
     }
 
     /**
+     * 自动释放锁。
+     * 任务设置锁的过期时间为5s，执行结束立即释放锁。创建10个线程，每个线程间隔1s执行一次任务。
+     * 如果每个线程都能成功获取到锁，表示释放成功。测试通过。
+     */
+    @SneakyThrows
+    @Test
+    public void autoReleaseLock() {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                userService.autoReleaseLock();
+            }
+        };
+        for (int i = 0; i < 10; i++) {
+            executorService.submit(task);
+            Thread.sleep(1000);
+        }
+        Thread.sleep(Long.MAX_VALUE);
+    }
+
+    /**
      * redisTemplate锁续期
      */
     @SneakyThrows
